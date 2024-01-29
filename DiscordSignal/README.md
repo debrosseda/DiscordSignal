@@ -55,13 +55,16 @@ Due to the limited memory of the ESP32, some websocket messages may be too large
 
 ## Used Libraries:
 ### [FastLED](https://github.com/FastLED/FastLED)
+Supports multiple types of addressable RGB LED strips and panels
 
 ### [WebSockets2_Generic](https://https://github.com/khoih-prog/WebSockets2_Generic)
+Connects to the Discord Gateway API
 
 ### [ArduinoJson](https://github.com/bblanchon/ArduinoJson)
-Used to decode JSON payloads from Discord.
+Used to decode JSON payloads from Discord
 
 ### [WifiManager](https://github.com/tzapu/WiFiManager)
+Allows users to select a Wifi network and enter a password from a mobile device with the ESP32 acting as a Wifi AP
 
 ## Other Resources
 
