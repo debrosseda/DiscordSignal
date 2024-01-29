@@ -271,14 +271,16 @@ void onMessageCallback(WebsocketsMessage message) {
       DEBUG_MSG(idx);
 
     } else if (doc["t"] == "MESSAGE_CREATE" || doc["t"] == "MESSAGE_UPDATE") {
-      curUser = doc["d"]["author"]["id"].as<String>();     
-      idx = findKnownUser(curUser);
-      if (idx == ownerID){
-        ownerPinged = false;
+      if (doc["d"]["author"]["id"]){
+        curUser = doc["d"]["author"]["id"].as<String>();     
+        idx = findKnownUser(curUser);
+        if (idx == ownerID){
+          ownerPinged = false;
+        }
+        DEBUG_MSG(idx);
+        makeUserActive(idx);
       }
-      DEBUG_MSG(idx);
-      makeUserActive(idx);
-
+      
       if (doc["d"]["mentions"]){
         for (JsonVariant v : doc["d"]["mentions"].as<JsonArray>()){
           curUser = v["id"].as<String>();
