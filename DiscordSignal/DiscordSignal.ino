@@ -89,7 +89,7 @@ void setup() {
   filter["d"]["heartbeat_interval"] = true;
   filter["d"]["resume_gateway_url"] = true;
   filter["d"]["session_id"] = true;
-
+  filter["d"]["message_author_id"] = true;
 
   WiFiManager wm;
   //wm.resetSettings();  //if needed to test wifi setup
@@ -227,7 +227,7 @@ void onMessageCallback(WebsocketsMessage message) {
       }
       DEBUG_MSG(idx);
       makeUserActive(idx);
-      //leds[idx]= CRGB(0, 32, 0);
+      
       //Special React Effects
       if (doc["d"]["emoji"]["name"] =="🌈"){
         rainbow_wave(5,11);
@@ -262,7 +262,13 @@ void onMessageCallback(WebsocketsMessage message) {
         defDelay = 16;
         DEBUG_MSG("Delay is 16");
       }
-
+      
+      //Sparkle for user reacted topics
+      curUser = doc["d"]["message_author_id"].as<String>();
+      idx = findKnownUser(curUser);
+      if (idx > -1){
+        color_sparkle(40, 3, 20, userColors[idx]);
+      }
       
     } else if (doc["t"] == "TYPING_START") {
       curUser = doc["d"]["user_id"].as<String>();
@@ -288,11 +294,13 @@ void onMessageCallback(WebsocketsMessage message) {
           if (idx == ownerID){
             ownerPinged = true;
           }
-          color_sparkle(40, 3, 20, userColors[idx]);
-          delay(700);
-          color_sparkle(40, 3, 20, userColors[idx]);
-          delay(700);
-          color_sparkle(40, 3, 20, userColors[idx]);
+          if (idx > -1){
+            color_sparkle(40, 3, 20, userColors[idx]);
+            delay(700);
+            color_sparkle(40, 3, 20, userColors[idx]);
+            delay(700);
+            color_sparkle(40, 3, 20, userColors[idx]);
+          }
           DEBUG_MSG(idx);
         }
       }
@@ -413,16 +421,19 @@ int findVoiceUser(String user_ID){
 }
 
 void makeUserActive(int thisUser){
-  if (userActive[thisUser] == 0){
-    curUserPixel[thisUser] = random(NUM_LEDS);}
+  if (thisUser > -1){
+    if (userActive[thisUser] == 0){
+      curUserPixel[thisUser] = random(NUM_LEDS);}
 
-  userActive[thisUser] = defDelay;
-  userDelay[thisUser] = random(2,7);
-  userTimer[thisUser] = abs(userDelay[thisUser]);
-  if (random(100)>49){
-    userDelay[thisUser] = -userDelay[thisUser];
+    userActive[thisUser] = defDelay;
+    userDelay[thisUser] = random(2,7);
+    userTimer[thisUser] = abs(userDelay[thisUser]);
+    if (random(100)>49){
+      userDelay[thisUser] = -userDelay[thisUser];
+    }
   }
 }
+
 
 void activityDecay(){
   for (uint8_t thisUser=0; thisUser<NUM_USERS; thisUser++){
