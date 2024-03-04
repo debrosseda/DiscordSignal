@@ -6,6 +6,8 @@ Implements a basic Discord WebSocket client as documented at https://discord.com
 
 Based on the ESP Discord WebSocket Client by Cimera42: https://github.com/Cimera42/esp-discord-client
 
+![image](https://github.com/debrosseda/DiscordSignal/assets/108755123/4d14e54a-609d-456a-ae54-c3ce9a2bff97)
+
 ## Installation
 
 1. Install ESP board for Arduino as outlined on the [official documentation](https://arduino-esp8266.readthedocs.io/en/latest/installing.html)
@@ -66,6 +68,14 @@ Used to decode JSON payloads from Discord
 ### [WifiManager](https://github.com/tzapu/WiFiManager)
 Allows users to select a Wifi network and enter a password from a mobile device with the ESP32 acting as a Wifi AP
 
+
 ## Other Resources
 
 Based on https://github.com/Cimera42/DiscordBot
+
+## Hardware
+My implementation uses a shadowbox frame purchased from a craft store. The WS2812B strip is glued and taped to the inner frame and trimmed to length. A diffuser layer of tissue paper spreads the light behind the glass, which has an opaque logo applied. The strip connector gets 5V and GND connected to the ESP32 board and the appropirate GPIO connected to Din. A pull down resistor on the data line may be neccessary on some strips, or even a 5V level shifter.
+
+![PXL_20240125_171411650](https://github.com/debrosseda/DiscordSignal/assets/108755123/218bc4b3-ae82-4316-9935-aa2c44333fd4)
+
+
